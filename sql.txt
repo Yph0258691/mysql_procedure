@@ -1,0 +1,32 @@
+#内连接查询,显示a表记录
+select a.* from a_table a join b_table b on a.a_id =b.b_id;
+
+#左外连接 ,取决于左表，在另一一张表填充0
+select * from a_table a  left join b_table b on a.a_id = b.b_id;
+
+#子表查询
+select e.*from employee e,(select *from department) d where e.DepartmentId =1;
+
+#字表临时表查询
+select t.* from (select *from employee where employee.DepartmentId =1) t;
+
+#or查询
+select *from test where age =23 or age =34;
+
+#union查询 等价于or查询
+select *from test where age =23 union select *from test where age =34;
+
+#创建普通索引
+create index index_age on test(age);
+
+#分页查询
+select *from test limit 0,10;
+
+#使用指定索引去查询 
+select *from test use index(index_age) where age = 23;
+
+#互忽略指定索引，导致全表扫描
+explain select *from test ignore index(index_age) where age = 23;
+
+#强制指定一个索引 可以查看sql执行计划
+explain select *from test force index(index_age) where age =23;
