@@ -33,3 +33,15 @@ explain select *from test force index(index_age) where age =23;
 
 #内连接 也就是不能出现为空的，on 后面的条件必须是唯一的主键关联
 select d.* from employee e join department d on e.Id =d.Id where d.DepartmentId =1;
+
+#sql语句复杂查询 ，注意limit 前面参数就是跳过的行数，后面的参数代表要实现多少行
+select employee.* from employee where employee.Salary >(select avg(employee.Salary) from employee) and employee.DepartmentId =1 order by employee.Salary desc
+limit 0,10;
+
+#注意事项:
+1:where 后面不能跟聚合函数，比如max,min avg count等函数
+2:having 后面必须跟聚合函数,前面必须是group by 
+3:group by是分组后的结果,where不是分组后的结果
+4:表连接查询：主要分为内连接和外连接,外连接包括左外连接和右外连接.(主要解决的是笛卡尔积的问题,on 后面的条件要写好)
+5:左外连接，就是按照左表查询，另外一张表的数据在左表没有的，就填充NULL
+6:右外连接，就是按照右表查询，另外一张表的数据在右表没有的，就填充NULL
