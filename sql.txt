@@ -30,3 +30,6 @@ explain select *from test ignore index(index_age) where age = 23;
 
 #强制指定一个索引 可以查看sql执行计划
 explain select *from test force index(index_age) where age =23;
+
+#内连接 也就是不能出现为空的，on 后面的条件必须是唯一的主键关联
+select d.* from employee e join department d on e.Id =d.Id where d.DepartmentId =1;
